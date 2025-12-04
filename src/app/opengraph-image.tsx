@@ -36,9 +36,7 @@ export default function OpenGraphImage() {
             QR Code Buddy
           </div>
           <div style={{ fontSize: 64, fontWeight: 700, lineHeight: 1.05 }}>
-            Paste URLs,
-            <br />
-            get crisp PNG QR codes.
+            Paste URLs, get crisp PNG QR codes.
           </div>
           <div style={{ fontSize: 24, opacity: 0.85, maxWidth: 640 }}>
             Generate, rename, and download multiple QR codes instantly.
@@ -50,8 +48,9 @@ export default function OpenGraphImage() {
             height: 240,
             background: "white",
             borderRadius: 32,
-            display: "grid",
-            placeItems: "center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             boxShadow: "0 25px 80px rgba(0,0,0,0.35)",
           }}
         >

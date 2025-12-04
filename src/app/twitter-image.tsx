@@ -36,9 +36,7 @@ export default function TwitterImage() {
             QR Code Buddy
           </div>
           <div style={{ fontSize: 60, fontWeight: 700, lineHeight: 1.05 }}>
-            Generate multiple
-            <br />
-            PNG QR codes fast.
+            Generate multiple PNG QR codes fast.
           </div>
           <div style={{ fontSize: 24, opacity: 0.85, maxWidth: 640 }}>
             Paste URLs, rename files, download as PNGs or a zip.
@@ -50,8 +48,9 @@ export default function TwitterImage() {
             height: 220,
             background: "white",
             borderRadius: 28,
-            display: "grid",
-            placeItems: "center",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             boxShadow: "0 25px 80px rgba(0,0,0,0.35)",
           }}
         >
