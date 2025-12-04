@@ -167,9 +167,6 @@ export default function Home() {
         </header>
 
         <section className="flex flex-col gap-3">
-          <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
-            QR Code Buddy
-          </p>
           <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
             Paste URLs, get crisp PNG QR codes.
           </h1>
