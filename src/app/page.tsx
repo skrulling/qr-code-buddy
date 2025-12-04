@@ -73,9 +73,9 @@ export default function Home() {
         new URL(url);
         const dataUrl = await QRCode.toDataURL(url, {
           errorCorrectionLevel: "H",
-          margin: 2,
-          width: DEFAULT_SIZE,
-        });
+      margin: 2,
+      width: DEFAULT_SIZE,
+    });
 
         nextCodes.push({
           url,
@@ -154,6 +154,18 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/60">
       <main className="mx-auto flex max-w-5xl flex-col gap-10 px-6 pb-20 pt-16">
+        <header className="flex items-center gap-3 text-sm font-medium text-muted-foreground">
+          <Image
+            src="/logo.webp"
+            alt="QR Code Buddy logo"
+            width={36}
+            height={36}
+            className="rounded-md"
+            priority
+          />
+          <span className="text-foreground">QR Code Buddy</span>
+        </header>
+
         <section className="flex flex-col gap-3">
           <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground">
             QR Code Buddy
