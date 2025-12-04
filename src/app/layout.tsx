@@ -17,6 +17,15 @@ export const metadata: Metadata = {
   title: "QR Code Buddy",
   description: "Generate and download high-quality PNG QR codes in seconds.",
   metadataBase: new URL("https://qr-code-buddy.vercel.app"),
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+    shortcut: ["/favicon.ico"],
+  },
+  manifest: "/site.webmanifest",
   openGraph: {
     title: "QR Code Buddy",
     description: "Generate and download high-quality PNG QR codes in seconds.",
