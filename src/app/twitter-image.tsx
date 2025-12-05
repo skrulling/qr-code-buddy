@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 export const size = {
   width: 1200,
@@ -7,7 +9,10 @@ export const size = {
 
 export const contentType = "image/png";
 
-export default function TwitterImage() {
+export default async function TwitterImage() {
+  const logoBuffer = readFileSync(join(process.cwd(), "public", "logo-og.png"));
+  const logoData = Uint8Array.from(logoBuffer).buffer;
+
   return new ImageResponse(
     (
       <div
@@ -15,124 +20,144 @@ export default function TwitterImage() {
           display: "flex",
           width: "100%",
           height: "100%",
-          background:
-            "linear-gradient(180deg, #f8fafc 0%, #e0f2fe 35%, #e5e7eb 100%)",
-          color: "#0f172a",
-          fontFamily: "Inter, Arial, sans-serif",
-          padding: "64px 72px",
+          background: "linear-gradient(180deg, #ffffff 0%, #ffffff 50%, #f7f7f799 100%)",
+          color: "#252525",
+          fontFamily: "system-ui, sans-serif",
+          padding: "60px",
           boxSizing: "border-box",
-          alignItems: "center",
-          justifyContent: "space-between",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 10,
-                background:
-                  "linear-gradient(135deg, #0ea5e9 0%, #22d3ee 60%, #f8fafc 100%)",
-                boxShadow: "0 8px 24px rgba(14,165,233,0.25)",
-              }}
-            />
-            <span
-              style={{ fontSize: 20, fontWeight: 700, letterSpacing: 0.4 }}
-            >
-              QR Code Buddy
-            </span>
-          </div>
-          <div
-            style={{
-              fontSize: 58,
-              fontWeight: 700,
-              lineHeight: 1.05,
-              maxWidth: 700,
-            }}
-          >
-            Generate multiple PNG QR codes fast.
-          </div>
-          <div
-            style={{
-              fontSize: 24,
-              opacity: 0.8,
-              maxWidth: 680,
-              lineHeight: 1.4,
-            }}
-          >
-            Paste URLs, rename files, and download as PNGs or a tidy zip.
-          </div>
-        </div>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
-            gap: 20,
-            width: 360,
-            height: 320,
-            padding: 22,
-            background: "rgba(255,255,255,0.9)",
-            borderRadius: 28,
-            border: "1px solid rgba(15, 23, 42, 0.08)",
-            boxShadow: "0 25px 80px rgba(15,23,42,0.18)",
-            boxSizing: "border-box",
+            width: "100%",
+            gap: 40,
           }}
         >
-          <div style={{ display: "flex", gap: 12 }}>
-            <div
-              style={{
-                width: 110,
-                height: 110,
-                borderRadius: 14,
-                background:
-                  "linear-gradient(135deg, #0ea5e9 0%, #6366f1 60%, #f8fafc 100%)",
-              }}
+          {/* Header */}
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <img
+              // @ts-ignore
+              src={logoData}
+              alt="QR Code Buddy logo"
+              width={36}
+              height={36}
+              style={{ borderRadius: 6 }}
             />
+            <span style={{ fontSize: 18, fontWeight: 500, color: "#252525" }}>
+              QR Code Buddy
+            </span>
+          </div>
+
+          {/* Main content */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <h1
+              style={{
+                fontSize: 60,
+                fontWeight: 600,
+                lineHeight: 1.1,
+                margin: 0,
+                color: "#252525",
+              }}
+            >
+              Paste URLs, get crisp PNG QR codes.
+            </h1>
+            <p
+              style={{
+                fontSize: 22,
+                lineHeight: 1.5,
+                margin: 0,
+                color: "#8e8e8e",
+                maxWidth: 800,
+              }}
+            >
+              Drop one or many links, generate high-quality PNG codes, rename
+              them, then download a single file or a tidy zip.
+            </p>
+          </div>
+
+          {/* Card mockup */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              background: "rgba(255, 255, 255, 0.8)",
+              border: "1px solid rgba(235, 235, 235, 0.7)",
+              borderRadius: 16,
+              padding: 24,
+              gap: 20,
+              maxWidth: 900,
+              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
+            }}
+          >
             <div
               style={{
                 display: "flex",
-                flexDirection: "column",
-                gap: 8,
-                flex: 1,
-                justifyContent: "center",
+                gap: 24,
+                alignItems: "center",
               }}
             >
+              <div style={{ display: "flex", flexDirection: "column", gap: 12, flex: 1 }}>
+                <span style={{ fontSize: 14, fontWeight: 500, color: "#252525" }}>
+                  URLs (one per line)
+                </span>
+                <div
+                  style={{
+                    background: "#ffffff",
+                    border: "1px solid #ebebeb",
+                    borderRadius: 8,
+                    padding: 12,
+                    minHeight: 100,
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 8,
+                  }}
+                >
+                  <div
+                    style={{
+                      height: 12,
+                      background: "#ebebeb",
+                      borderRadius: 4,
+                      width: "70%",
+                    }}
+                  />
+                  <div
+                    style={{
+                      height: 12,
+                      background: "#ebebeb",
+                      borderRadius: 4,
+                      width: "65%",
+                    }}
+                  />
+                </div>
+              </div>
               <div
                 style={{
-                  height: 12,
-                  background: "#e2e8f0",
-                  borderRadius: 999,
-                  width: "80%",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 12,
+                  alignItems: "flex-start",
                 }}
-              />
-              <div
-                style={{
-                  height: 12,
-                  background: "#e2e8f0",
-                  borderRadius: 999,
-                  width: "60%",
-                }}
-              />
-              <div
-                style={{
-                  height: 12,
-                  background: "#cbd5e1",
-                  borderRadius: 999,
-                  width: "50%",
-                }}
-              />
+              >
+                <div style={{ fontSize: 12, color: "#8e8e8e" }}>Output</div>
+                <div style={{ fontSize: 14, fontWeight: 500 }}>PNG · 512px · Error correction H</div>
+                <div
+                  style={{
+                    background: "#252525",
+                    color: "white",
+                    padding: "12px 24px",
+                    borderRadius: 6,
+                    fontSize: 14,
+                    fontWeight: 500,
+                    marginTop: 8,
+                  }}
+                >
+                  Generate QR codes
+                </div>
+              </div>
             </div>
           </div>
-          <div
-            style={{
-              height: 16,
-              background: "#0ea5e9",
-              borderRadius: 12,
-              boxShadow: "0 8px 24px rgba(14,165,233,0.35)",
-            }}
-          />
         </div>
       </div>
     ),
