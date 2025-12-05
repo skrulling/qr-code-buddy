@@ -154,16 +154,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/60">
       <main className="mx-auto flex max-w-5xl flex-col gap-10 px-6 pb-20 pt-16">
-        <header className="flex items-center gap-3 text-sm font-medium text-muted-foreground">
+        <header className="flex items-center gap-4">
           <Image
             src="/logo.webp"
             alt="QR Code Buddy logo"
-            width={36}
-            height={36}
-            className="rounded-md"
+            width={48}
+            height={48}
+            className="rounded-lg"
             priority
           />
-          <span className="text-foreground">QR Code Buddy</span>
+          <span className="text-xl font-semibold text-foreground">QR Code Buddy</span>
         </header>
 
         <section className="flex flex-col gap-3">
