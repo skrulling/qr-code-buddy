@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import JSZip from "jszip";
 import QRCode from "qrcode";
+import { QrCode, Download } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -152,65 +153,56 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/60">
-      <main className="mx-auto flex max-w-5xl flex-col gap-10 px-6 pb-20 pt-16">
+    <div className="min-h-screen bg-background">
+      <main className="mx-auto flex max-w-4xl flex-col gap-16 px-8 pb-24 pt-16">
         <header className="flex items-center gap-4">
           <Image
             src="/logo.webp"
             alt="QR Code Buddy logo"
-            width={48}
-            height={48}
+            width={44}
+            height={44}
             className="rounded-lg"
             priority
           />
           <span className="text-xl font-semibold text-foreground">QR Code Buddy</span>
         </header>
 
-        <section className="flex flex-col gap-3">
-          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+        <section className="flex flex-col gap-5">
+          <h1 className="text-5xl font-bold tracking-tight text-foreground sm:text-6xl">
             Paste URLs, get crisp PNG QR codes.
           </h1>
-          <p className="max-w-2xl text-base text-muted-foreground sm:text-lg">
+          <p className="max-w-2xl text-lg text-muted-foreground">
             Drop one or many links, generate high-quality PNG codes, rename
             them, then download a single file or a tidy zip.
           </p>
         </section>
 
-        <div className="overflow-hidden rounded-2xl border border-border/70 bg-card/80 shadow-lg shadow-black/5 backdrop-blur">
-          <div className="grid gap-6 border-b border-border/70 bg-card/60 px-6 py-6 sm:grid-cols-3 sm:items-center">
-            <div className="sm:col-span-2">
-              <Label htmlFor="urls">URLs (one per line)</Label>
+        <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-6">
+            <div>
+              <Label htmlFor="urls" className="text-sm font-medium">URLs (one per line)</Label>
               <Textarea
                 id="urls"
-                placeholder="https://example.com\nhttps://another.com/landing"
+                placeholder="https://example.com&#10;https://another.com/landing"
                 value={urlsInput}
                 onChange={(event) => setUrlsInput(event.target.value)}
-                className="mt-3 h-36 resize-none"
+                className="mt-3 h-52 resize-none border-border bg-background"
               />
             </div>
-            <div className="flex flex-col gap-4">
-              <div>
-                <Label className="text-xs text-muted-foreground">
-                  Output
-                </Label>
-                <p className="text-sm font-medium text-foreground">
-                  PNG · {DEFAULT_SIZE}px · Error correction H
-                </p>
-              </div>
-              <Separator />
-              <Button
-                onClick={handleGenerate}
-                disabled={isGenerating}
-                className="w-full"
-              >
-                {isGenerating ? "Generating…" : "Generate QR codes"}
-              </Button>
-            </div>
+            <Button
+              onClick={handleGenerate}
+              disabled={isGenerating}
+              className="w-full rounded-full sm:w-auto sm:self-center sm:px-12"
+              size="lg"
+            >
+              <QrCode className="mr-1 h-5 w-5" />
+              {isGenerating ? "Generating…" : "Generate QR codes"}
+            </Button>
           </div>
 
-          <div className="px-6 py-5">
+          <div>
             {error ? (
-              <p className="rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              <p className="rounded-lg border border-destructive/20 bg-destructive/5 px-4 py-3 text-sm text-destructive">
                 {error}
               </p>
             ) : (
@@ -224,16 +216,16 @@ export default function Home() {
 
           {!!codes.length && (
             <>
-              <Separator />
-              <div className="grid gap-6 px-6 py-8 sm:grid-cols-2">
+              <div className="h-px bg-border" />
+              <div className="grid gap-8 sm:grid-cols-2">
                 {codes.map((code, index) => (
                   <div
                     key={`${code.url}-${index}`}
-                    className="flex flex-col gap-4 rounded-xl border border-border/60 bg-card/70 p-4"
+                    className="flex flex-col gap-6"
                   >
-                    <div className="flex items-center justify-between gap-3">
+                    <div className="flex flex-col gap-6">
                       <div>
-                        <Label className="text-xs text-muted-foreground">
+                        <Label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                           File name
                         </Label>
                         <Input
@@ -244,33 +236,37 @@ export default function Home() {
                           className="mt-2"
                         />
                       </div>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => downloadSingle(code)}
-                      >
-                        Download
-                      </Button>
                     </div>
-                    <div className="overflow-hidden rounded-lg border border-border/70 bg-white">
+                    <div className="overflow-hidden rounded-lg border border-border bg-white">
                       {/* Images are data URLs; no extra requests */}
                       <Image
                         src={code.dataUrl}
                         alt={`QR for ${code.url}`}
                         width={DEFAULT_SIZE}
                         height={DEFAULT_SIZE}
-                        className="h-auto w-full rounded-lg bg-white p-4"
+                        className="h-auto w-full bg-white p-6"
                         unoptimized
                       />
                     </div>
-                    <p className="truncate text-xs text-muted-foreground">
-                      {code.url}
-                    </p>
+                    <div className="flex items-center justify-between gap-4">
+                      <p className="truncate text-xs text-muted-foreground">
+                        {code.url}
+                      </p>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => downloadSingle(code)}
+                        className="shrink-0 rounded-full"
+                      >
+                        <Download className="mr-1 h-4 w-4" />
+                        Download
+                      </Button>
+                    </div>
                   </div>
                 ))}
               </div>
-              <Separator />
-              <div className="flex flex-col gap-3 px-6 pb-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="h-px bg-border" />
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-sm text-muted-foreground">
                   {codes.length} file{codes.length === 1 ? "" : "s"} ready.
                   {codes.length > 1
@@ -280,8 +276,10 @@ export default function Home() {
                 <Button
                   onClick={handleDownloadAll}
                   disabled={isDownloading}
-                  className="sm:w-auto"
+                  className="sm:w-auto rounded-full"
+                  size="lg"
                 >
+                  <Download className="mr-1 h-5 w-5" />
                   {isDownloading
                     ? "Preparing download…"
                     : codes.length === 1
